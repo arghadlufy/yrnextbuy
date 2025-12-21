@@ -1,8 +1,31 @@
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 import ProductCard from "./ProductCard";
 import prisma from "@/lib/prisma";
 
-export default async function HomePage() {
-  const products = await prisma.product.findMany();
+type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
+
+export default async function HomePage(props: { searchParams: SearchParams }) {
+  const searchParams = await props.searchParams;
+
+  const page = Number(searchParams.page) || 1;
+  const pageSize = 3;
+  const skip = (page - 1) * pageSize;
+  const [totalProducts, products] = await Promise.all([
+    prisma.product.count(),
+    prisma.product.findMany({
+      skip,
+      take: pageSize,
+    }),
+  ]);
+
+  const totalPages = Math.ceil(totalProducts / pageSize);
 
   await new Promise((resolve) => setTimeout(resolve, 3000));
 
@@ -16,6 +39,30 @@ export default async function HomePage() {
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
+
+      <Pagination className="mt-6">
+        <PaginationContent>
+          {page > 1 && (
+            <PaginationItem>
+              <PaginationPrevious href={`/?page=${page - 1}`} />
+            </PaginationItem>
+          )}
+
+          {Array.from({ length: totalPages }).map((_, index) => (
+            <PaginationItem key={index}>
+              <PaginationLink href={`/?page=${index + 1}`}>
+                {index + 1}
+              </PaginationLink>
+            </PaginationItem>
+          ))}
+
+          {page < totalPages && (
+            <PaginationItem>
+              <PaginationNext href={`/?page=${page + 1}`} />
+            </PaginationItem>
+          )}
+        </PaginationContent>
+      </Pagination>
     </main>
   );
 }
