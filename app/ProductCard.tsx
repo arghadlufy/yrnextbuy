@@ -1,10 +1,17 @@
 import { formatPrice } from "@/lib/utils";
 import Image from "next/image";
 import { Product } from "./generated/prisma/client";
+import {
+  Card,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export default function ProductCard({ product }: { product: Product }) {
   return (
-    <div className="bg-white rounded-lg shadow-md p-4">
+    <Card className="pt-0 overflow-hidden">
       <div className="relative aspect-video">
         {product.image && (
           <Image
@@ -16,11 +23,15 @@ export default function ProductCard({ product }: { product: Product }) {
           />
         )}
       </div>
-      <h3 className="text-lg font-bold mb-2">{product.name}</h3>
-      <p className="text-gray-600 mb-4">{product.description}</p>
-      <p className="text-green-600 font-bold text-xl">
-        {formatPrice(product.price)}
-      </p>
-    </div>
+
+      <CardHeader>
+        <CardTitle>{product.name}</CardTitle>
+        <CardDescription>{product.description}</CardDescription>
+      </CardHeader>
+
+      <CardFooter>
+        <p>{formatPrice(product.price)}</p>
+      </CardFooter>
+    </Card>
   );
 }
