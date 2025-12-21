@@ -7,6 +7,9 @@ export async function getProductBySlug(slug: string) {
     where: {
       slug,
     },
+    include: {
+      category: true,
+    },
   });
 
   if (!product) {

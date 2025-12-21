@@ -1,7 +1,38 @@
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import { getProductBySlug } from "@/lib/actions";
 import { formatPrice } from "@/lib/utils";
-import Image from "next/image";
 import { notFound } from "next/navigation";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const product = await getProductBySlug(slug);
+
+  if (!product) {
+    return {};
+  }
+
+  return {
+    title: product.name,
+    description: product.description,
+    keywords: [product.name, product.category.name],
+    openGraph: {
+      title: product.name,
+      description: product.description,
+      images: [product.image],
+    },
+    twitter: {
+      title: product.name,
+      description: product.description,
+      images: [product.image],
+    },
+  };
+}
 
 export default async function ProductPage({
   params,
@@ -16,18 +47,30 @@ export default async function ProductPage({
   }
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-6">{product.name}</h1>
-      <p className="text-lg mb-6">{product.description}</p>
-      <p className="text-lg mb-6">{formatPrice(product.price)}</p>
-      {product.image && (
-        <Image
-          src={product.image}
-          alt={product.name}
-          width={500}
-          height={500}
-        />
-      )}
-    </div>
+    <main className="container mx-auto p-4">
+      <Card className="max-w-3xl mx-auto">
+        <CardContent className="p-6">
+          <h1 className="text-3xl font-bold mb-6">{product.name}</h1>
+
+          <div className="flex items-center gap-2 mb-4">
+            <span className="font-semibold text-lg">
+              {formatPrice(product.price)}
+            </span>
+
+            <Badge variant="outline">{product.category.name}</Badge>
+          </div>
+
+          <Separator className="my-4" />
+
+          <div className="space-y-2">
+            <h2 className="text-lg font-semibold">Description</h2>
+
+            <p className="text-sm text-muted-foreground">
+              {product.description}
+            </p>
+          </div>
+        </CardContent>
+      </Card>
+    </main>
   );
 }
