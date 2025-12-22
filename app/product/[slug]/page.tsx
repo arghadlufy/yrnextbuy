@@ -1,8 +1,10 @@
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { getProductBySlug } from "@/lib/actions";
-import { formatPrice } from "@/lib/utils";
+import { cn, formatPrice } from "@/lib/utils";
+import { ShoppingCartIcon } from "lucide-react";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
@@ -83,6 +85,39 @@ export default async function ProductPage({
               <p className="text-sm text-muted-foreground">
                 {product.description}
               </p>
+            </div>
+
+            <Separator className="my-4" />
+
+            <div className="space-y-2">
+              <h2 className="text-lg font-semibold">Availability</h2>
+              <div className="flex items-center gap-2">
+                {product.inventory > 0 ? (
+                  <Badge variant="outline" className="bg-green-700 text-white">
+                    In Stock ({product.inventory})
+                  </Badge>
+                ) : (
+                  <Badge variant="outline" className="bg-red-700 text-white">
+                    Out of Stock ({product.inventory})
+                  </Badge>
+                )}
+              </div>
+            </div>
+
+            <Separator className="my-4" />
+
+            <div className="space-y-2">
+              <Button
+                variant="default"
+                disabled={product.inventory === 0}
+                className={cn(
+                  product.inventory === 0 && "opacity-50 cursor-not-allowed",
+                  "w-full"
+                )}
+              >
+                <ShoppingCartIcon className="w-4 h-4" />
+                Add to Cart
+              </Button>
             </div>
           </div>
         </CardContent>
