@@ -9,17 +9,17 @@ export const categories = [
   {
     id: 1,
     name: "Electronics",
-    href: "/category/electronics",
+    href: "/search/electronics",
   },
   {
     id: 2,
     name: "Clothing",
-    href: "/category/clothing",
+    href: "/search/clothing",
   },
   {
     id: 3,
     name: "Home",
-    href: "/category/home",
+    href: "/search/home",
   },
 ];
 
@@ -47,7 +47,7 @@ export function Navbar() {
           {/* Modile nav */}
           <MobileNav />
         </div>
-        <div className="hidden md:block w-full flex-1 mx-4 md:mx-8">
+        <div className="block w-full flex-1 mx-4 md:mx-8">
           <SearchInput />
         </div>
         <div className="flex items-center gap-4">
