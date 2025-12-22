@@ -3,6 +3,7 @@ import { ThemeToggle } from "./theme-toggle";
 import { Button } from "./ui/button";
 import { SearchIcon, ShoppingCartIcon } from "lucide-react";
 import { MobileNav } from "./mobile-nav";
+import SearchInput from "./search-input";
 
 export const categories = [
   {
@@ -45,6 +46,9 @@ export function Navbar() {
 
           {/* Modile nav */}
           <MobileNav />
+        </div>
+        <div className="hidden md:block w-full flex-1 mx-4 md:mx-8">
+          <SearchInput />
         </div>
         <div className="flex items-center gap-4">
           <Button asChild variant="ghost" size="icon">
