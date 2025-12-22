@@ -20,6 +20,7 @@ model Product {
   price       Float
   image       String?
   slug        String  @unique
+  inventory   Int     @default(0)
 
   categoryId String
   category   Category @relation(fields: [categoryId], references: [id])
