@@ -2,8 +2,9 @@ import Link from "next/link";
 import { ThemeToggle } from "./theme-toggle";
 import { Button } from "./ui/button";
 import { SearchIcon, ShoppingCartIcon } from "lucide-react";
+import { MobileNav } from "./mobile-nav";
 
-const categories = [
+export const categories = [
   {
     id: 1,
     name: "Electronics",
@@ -23,7 +24,7 @@ const categories = [
 
 export function Navbar() {
   return (
-    <div className="border-b py-4">
+    <div className="border-b border-dashed py-4">
       <div className="container mx-auto flex items-center justify-between">
         <div className="flex items-center gap-4">
           <Link href="/" className="text-2xl font-bold">
@@ -41,6 +42,9 @@ export function Navbar() {
               </Link>
             ))}
           </nav>
+
+          {/* Modile nav */}
+          <MobileNav />
         </div>
         <div className="flex items-center gap-4">
           <Button asChild variant="ghost" size="icon">
