@@ -37,10 +37,20 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <header>
-            <Navbar />
-          </header>
-          {children}
+          <div className="flex flex-col min-h-screen justify-between">
+            <header>
+              <Navbar />
+            </header>
+            {children}
+            <footer className="border-t border-dashed py-4">
+              <div className="container mx-auto flex items-center justify-between">
+                <p className="text-sm text-muted-foreground">
+                  &copy; {new Date().getFullYear()} YrNextBuy. All rights
+                  reserved.
+                </p>
+              </div>
+            </footer>
+          </div>
         </ThemeProvider>
       </body>
     </html>

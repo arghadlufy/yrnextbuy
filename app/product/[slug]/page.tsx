@@ -1,3 +1,4 @@
+import { Breadcrumbs } from "@/components/breadcrumbs";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -50,8 +51,19 @@ export default async function ProductPage({
   }
 
   return (
-    <main className="container mx-auto p-4">
-      <Card className="max-w-3xl mx-auto">
+    <main className="container mx-auto py-4">
+      <Breadcrumbs
+        items={[
+          { label: "Products", href: "/", active: false },
+          {
+            label: product.category.name,
+            href: `/category/${product.category.slug}`,
+            active: false,
+          },
+          { label: product.name, href: `/product/${slug}`, active: true },
+        ]}
+      />
+      <Card>
         <CardContent className="p-6 grid grid-cols-1 gap-4 md:grid-cols-2">
           <div className="relative rounded-lg overflow-hidden h-[200px] md:h-[400px]">
             {product.image && (
