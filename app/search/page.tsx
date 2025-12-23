@@ -56,12 +56,12 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
   ];
 
   return (
-    <main className="container mx-auto py-4">
+    <>
       <Breadcrumbs items={breadcrumbs} />
 
       <Suspense key={query} fallback={<ProductsSkeleton />}>
         <Products query={query} />
       </Suspense>
-    </main>
+    </>
   );
 }

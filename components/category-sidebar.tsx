@@ -1,23 +1,16 @@
+"use client";
+
 import prisma from "@/lib/prisma";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 
-export async function CategorySidebar({
-  activeCategory,
+export default function CategorySidebar({
+  categories,
 }: {
-  activeCategory?: string;
+  categories: { name: string; slug: string }[];
 }) {
-  const categories = await prisma.category.findMany({
-    select: {
-      name: true,
-      slug: true,
-    },
-    orderBy: {
-      name: "asc",
-    },
-  });
-
-  //   await new Promise((resolve) => setTimeout(resolve, 2000));
+  const params = useParams();
 
   return (
     <aside className="hidden md:block w-64">
@@ -30,7 +23,7 @@ export async function CategorySidebar({
               href={`/search/${category.slug}`}
               className={cn(
                 "text-sm font-medium hover:text-primary transition-colors",
-                activeCategory === category.slug && "text-primary font-bold"
+                params?.slug === category.slug && "text-primary font-bold"
               )}
             >
               {category.name}
