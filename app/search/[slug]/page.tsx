@@ -7,6 +7,8 @@ import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { ArrowUpDownIcon } from "lucide-react";
 import Link from "next/link";
+import { CategorySidebar } from "@/components/category-sidebar";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type CategoryPageProps = {
   params: Promise<{ slug: string }>;
@@ -110,9 +112,30 @@ export default async function CategoryPage({
         </Link>
       </div>
 
-      <Suspense key={slug + sort} fallback={<ProductsSkeleton />}>
-        <Products slug={slug} sort={sort} />
-      </Suspense>
+      <div className="flex gap-4">
+        <Suspense
+          key={slug}
+          fallback={
+            <aside className="hidden md:block w-64">
+              <div className="flex flex-col gap-2">
+                <Skeleton className="h-5 w-24" />
+                <div className="flex flex-col gap-2">
+                  {Array.from({ length: 5 }).map((_, index) => (
+                    <Skeleton key={index} className="h-4 w-full" />
+                  ))}
+                </div>
+              </div>
+            </aside>
+          }
+        >
+          <CategorySidebar activeCategory={slug} />
+        </Suspense>
+        <div className="flex-1">
+          <Suspense key={slug + sort} fallback={<ProductsSkeleton />}>
+            <Products slug={slug} sort={sort} />
+          </Suspense>
+        </div>
+      </div>
     </main>
   );
 }
