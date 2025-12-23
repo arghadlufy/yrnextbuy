@@ -4,10 +4,6 @@ import ProductCard from "../../ProductCard";
 import { Suspense } from "react";
 import ProductsSkeleton from "../../ProductsSkeleton";
 import { notFound } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { ArrowUpDownIcon } from "lucide-react";
-import Link from "next/link";
-import { Skeleton } from "@/components/ui/skeleton";
 
 type CategoryPageProps = {
   params: Promise<{ slug: string }>;

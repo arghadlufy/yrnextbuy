@@ -1,4 +1,5 @@
 import CategorySidebar from "@/components/category-sidebar";
+import SortingControls from "@/components/sorting-controls";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import prisma from "@/lib/prisma";
@@ -51,24 +52,7 @@ export default async function SearchLayout({
         <div className="flex flex-col items-center gap-2">
           {/* sorting */}
 
-          {/* <Link href={`/search/${slug}`}>
-            <Button variant="outline" size="sm">
-              <ArrowUpDownIcon className="w-4 h-4" />
-              Newest
-            </Button>
-          </Link>
-          <Link href={`/search/${slug}?sort=price-asc`}>
-            <Button variant="outline" size="sm">
-              <ArrowUpDownIcon className="w-4 h-4" />
-              Low to high
-            </Button>
-          </Link>
-          <Link href={`/search/${slug}?sort=price-desc`}>
-            <Button variant="outline" size="sm">
-              <ArrowUpDownIcon className="w-4 h-4" />
-              High to low
-            </Button>
-          </Link> */}
+          <SortingControls />
         </div>
       </div>
     </main>
